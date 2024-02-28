@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connection = async() =>{
     try{
-        await mongoose.connect('mongodb+srv://pellegrineschi86:1307tobias@proyectocoder.8zy159q.mongodb.net/');
+        await mongoose.connect('mongodb+srv://pellegrineschi86:1307tobias@proyectocoder.8zy159q.mongodb.net/ecommerce');
 
         console.log('conectado correctamente a la base de datos');
 

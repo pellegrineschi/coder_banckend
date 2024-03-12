@@ -3,11 +3,12 @@ const router = Router();
 const multer = require('multer');
 const path = require('path');
 const Products = require('../database/model/product.model');
+const productMannager = require('../productManager/ProductManager');
 
 //routes
 
-router.get('allProducts',(req,res) =>{
-    
-    })
+router.post('/createProducts',productMannager.createProduct);
+
+module.exports = router;
 
 

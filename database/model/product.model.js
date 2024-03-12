@@ -24,4 +24,4 @@ const ProducSchema = new Schema({
     }
 })
 
-module.exports = model('modelProduct',ProducSchema);
+module.exports = model('modelProduct',ProducSchema,'products');

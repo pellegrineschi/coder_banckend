@@ -53,13 +53,38 @@ const createProduct = async (req, res) => {
         status: "success",
         contador: products.length, //cuento la cantidad de objetos en el array
         articulos: products,
-        mensaje: "Artículos obtenidos exitosamente",
+        mensaje: "Productos obtenidos exitosamente",
       });
     } catch (error) {
-      console.error("Error al obtener los artículos:", error);
+      console.error("Error al obtener los productos:", error);
       return res.status(500).json({
         status: "error",
-        mensaje: "No se pudieron obtener los artículos",
+        mensaje: "No se pudieron obtener los productos",
+      });
+    }
+  };
+
+  const one = async (req, res) => {
+    let id = req.params.id;
+    try {
+      const productEncontrado = await Products.findById(id); //trae un producto por el id
+      if (productEncontrado) {
+        return res.status(200).json({
+          status: "success",
+          articulo: productEncontrado,
+          mensaje: "producto econtrado",
+        });
+      } else {
+        return res.status(400).json({
+          status: "error",
+          mensaje: "producto no encontrado",
+        });
+      }
+    } catch (error) {
+      console.error("Error al obtener el producto:", error);
+      return res.status(500).json({
+        status: "error",
+        mensaje: "No se pudieron obtener el producto",
       });
     }
   };
@@ -68,5 +93,6 @@ const createProduct = async (req, res) => {
 
   module.exports ={     
     createProduct,
-    getAll
+    getAll,
+    one
   }

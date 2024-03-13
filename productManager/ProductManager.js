@@ -114,12 +114,60 @@ const createProduct = async (req, res) => {
     }
   };
 
+  const edit = async (req, res) => {
+    let articuloID = req.params.id;
+    let parametro = req.body;
+    try {
+      let validarName =
+        !validator.isEmpty(parametro.name) &&
+        validator.isLength(parametro.name, { min: 5, max: 25 });
+      let validarPrice = !validator.isEmpty(parametro.price);
+      let validarCategory = !validator.isEmpty(parametro.category);
+      let validarStock = !validator.isEmpty(parametro.stock);
+      if (!validarName || !validarPrice || !validarCategory || !validarStock) {
+        throw new Error("no se a validado la informacion");
+      }
+    } catch (error) {
+      return res.status(400).json({
+        status: "error",
+        mensaje: "faltan datos",
+      });
+    }
+  
+    try {
+      const productUpdate = await Products.findOneAndUpdate(
+        { _id: articuloID },
+        parametro,
+        { new: true }
+      );
+      if (productUpdate) {
+        return res.status(200).json({
+          status: "success",
+          articulo: productUpdate,
+          mensaje: "producto actualizado",
+        });
+      } else {
+        return res.status(400).json({
+          status: "error",
+          mensaje: "no se encontro el producto a actualizar",
+        });
+      }
+    } catch (error) {
+      console.error("Error al actualizar el producto:", error);
+      return res.status(500).json({
+        status: "error",
+        mensaje: "No se pudo actualizar el producto",
+      });
+    }
+  };
+
 
 
   module.exports ={     
     createProduct,
     getAll,
     one,
-    eliminate
+    eliminate,
+    edit
     
   }

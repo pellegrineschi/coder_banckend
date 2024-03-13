@@ -45,8 +45,28 @@ const createProduct = async (req, res) => {
     }
   };
 
-  
+  const getAll = async (req, res) => {
+    try {
+      const ultimos = req.params.cant;
+      const products = await Products.find().sort({ fecha: -1 }).limit(ultimos); //traigo y ordeno de mandera desendente los ultimos alticulos que me llegan por parametro
+      return res.status(200).json({
+        status: "success",
+        contador: products.length, //cuento la cantidad de objetos en el array
+        articulos: products,
+        mensaje: "Artículos obtenidos exitosamente",
+      });
+    } catch (error) {
+      console.error("Error al obtener los artículos:", error);
+      return res.status(500).json({
+        status: "error",
+        mensaje: "No se pudieron obtener los artículos",
+      });
+    }
+  };
+
+
 
   module.exports ={     
-    createProduct
+    createProduct,
+    getAll
   }

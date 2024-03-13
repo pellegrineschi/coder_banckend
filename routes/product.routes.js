@@ -8,6 +8,7 @@ const productMannager = require('../productManager/ProductManager');
 //routes
 
 router.post('/createProducts',productMannager.createProduct);
+router.get('/getall/:cant?',productMannager.getAll);
 
 module.exports = router;
 

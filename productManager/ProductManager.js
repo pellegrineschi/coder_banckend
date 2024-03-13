@@ -89,10 +89,37 @@ const createProduct = async (req, res) => {
     }
   };
 
+  const eliminate = async (req, res) => {
+    let articuloId = req.params.id;
+    try {
+      const productBorrar = await Products.findOneAndDelete({ _id: articuloId });
+      if (productBorrar) {
+        return res.status(200).json({
+          status: "success",
+          articulo: productBorrar,
+          mensaje: "producto borrado",
+        });
+      } else {
+        return res.status(400).json({
+          status: "error",
+          mensaje: "no se encontro el producto a borrar",
+        });
+      }
+    } catch (error) {
+      console.error("Error al borrar el producto:", error);
+      return res.status(500).json({
+        status: "error",
+        mensaje: "No se pudo borrar el producto",
+      });
+    }
+  };
+
 
 
   module.exports ={     
     createProduct,
     getAll,
-    one
+    one,
+    eliminate
+    
   }

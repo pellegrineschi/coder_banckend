@@ -10,6 +10,7 @@ const productMannager = require('../productManager/ProductManager');
 router.post('/createProducts',productMannager.createProduct);
 router.get('/getall/:cant?',productMannager.getAll);
 router.get('/product/:id',productMannager.one);
+router.delete('/product/:id',productMannager.eliminate);
 
 module.exports = router;
 

@@ -117,6 +117,7 @@ const createProduct = async (req, res) => {
   const edit = async (req, res) => {
     let articuloID = req.params.id;
     let parametro = req.body;
+    
     try {
       let validarName =
         !validator.isEmpty(parametro.name) &&
@@ -135,7 +136,7 @@ const createProduct = async (req, res) => {
     }
   
     try {
-      const productUpdate = await Products.findOneAndUpdate(
+      const productUpdate = await Products.findByIdAndUpdate(
         { _id: articuloID },
         parametro,
         { new: true }

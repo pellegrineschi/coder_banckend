@@ -14,6 +14,7 @@ router.get('/product/:id',productMannager.one);
 router.delete('/product/:id',productMannager.eliminate);
 router.put('/product/:id',productMannager.edit);
 router.post('/addCart/:id',cartMannager.addToCart);
+router.get('/getCart/',cartMannager.getCart);
 
 module.exports = router;
 

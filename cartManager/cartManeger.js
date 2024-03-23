@@ -4,6 +4,7 @@ const validator = require('validator');
 const Cart = require('../database/model/cart.model');
 const Products = require('../database/model/product.model');
 
+
 const addToCart = async (req, res) => {
     let productoID = req.params.id;
     let cantidad = req.body.cantidad;
@@ -17,10 +18,12 @@ const addToCart = async (req, res) => {
             });
         }
 
-        let cart = new Cart({
-            producto: productoID,
+        let cart = await Cart.findOne({}) || new Cart();
+
+        cart.products.push({
+            product: productoID,
             cantidad: cantidad
-        });
+        })
 
         const cartSaved = await cart.save();
         return res.status(200).json({
@@ -37,6 +40,27 @@ const addToCart = async (req, res) => {
     }
 };
 
+const getCart = async(req, res)=>{
+    try{
+        const cart = await
+        Cart.findOne({}).populate('products.product');
+        console.log(JSON.stringify(cart,null,2));
+        return res.status(200).json({
+            status: 'success',
+            carrito: cart,
+            mensaje: 'carrito obtenido'
+        });
+    }catch(error){
+        console.error('Error al obtener el carrito: ', error);
+        return res.status(500).json({
+            status: 'error',
+            mensaje: 'no se pudo obtener el carrito'
+        });
+
+    }
+};
+
 module.exports = {
-    addToCart
+    addToCart,
+    getCart
 };

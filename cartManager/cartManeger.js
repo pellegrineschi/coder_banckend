@@ -20,10 +20,19 @@ const addToCart = async (req, res) => {
 
         let cart = await Cart.findOne({}) || new Cart();
 
-        cart.products.push({
-            product: productoID,
-            cantidad: cantidad
-        })
+        //buscar producto en el carrito
+        let productInCart = cart.products.find(p => p.product.toString()=== productoID);
+
+        if (productInCart){
+            productInCart.cantidad += Number(cantidad);
+        }else{
+            cart.products.push({
+                product: productoID,
+                cantidad: cantidad
+            })
+        }
+
+        
 
         const cartSaved = await cart.save();
         return res.status(200).json({
@@ -47,7 +56,10 @@ const getCart = async(req, res)=>{
         console.log(JSON.stringify(cart,null,2));
         return res.status(200).json({
             status: 'success',
-            carrito: cart,
+            carrito: cart.products.map(p => ({
+              product: p.product,
+              catidad: p.cantidad  
+            })),
             mensaje: 'carrito obtenido'
         });
     }catch(error){

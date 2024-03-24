@@ -10,6 +10,10 @@ const CartSchema = new Schema({
             product: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref:'modelProduct'
+            },
+            cantidad: {
+                type: Number,
+                required: true
             }
         }]
     }

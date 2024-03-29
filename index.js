@@ -2,9 +2,11 @@ const{connection} = require('./database/connection');
 const express = require('express');
 const cors = require('cors');
 const handlebars = require('express-handlebars');
-
+const http = require('http');
 const app = express();
 const port = 8080;
+const server = http.createServer(app);
+const {Server} = require('socket.io');
 
 //motor de plantillas
 app.engine('handlebars', handlebars.engine());
@@ -24,8 +26,13 @@ const routesProducts = require('./routes/product.routes');
 //cargando rutas
 app.use('/api',routesProducts);
 
+//socket
+const io = new Server(server);
+io.on('connection',(socket)=>{
+console.log('user conectado');
+})
 
-app.listen(port,() =>{
+server.listen(port,() =>{
         console.log('server runing on port 8080');
         connection();
     })

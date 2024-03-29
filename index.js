@@ -1,9 +1,18 @@
 const{connection} = require('./database/connection');
 const express = require('express');
 const cors = require('cors');
+const handlebars = require('express-handlebars');
 
 const app = express();
 const port = 8080;
+
+//motor de plantillas
+app.engine('handlebars', handlebars.engine());
+app.set('views', __dirname+'/views');
+app.set('view engine', 'handlebars');
+
+//public
+app.use(express.static(__dirname+'public'));
 
 app.use(cors());
 // covertir body a objeto js

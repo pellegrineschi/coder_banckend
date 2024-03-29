@@ -16,6 +16,11 @@ router.put('/product/:id',productMannager.edit);
 router.post('/addCart/:id',cartMannager.addToCart);
 router.get('/getCart/',cartMannager.getCart);
 
+//routes motor de plantillas
+router.get('/home', (req, res)=>{
+res.render('home',{nombre: 'matias'});
+})
+
 module.exports = router;
 
 

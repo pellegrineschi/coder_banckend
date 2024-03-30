@@ -1,2 +1,7 @@
 const socket = io();
-console.log('hola mundo');
+
+socket.on('newProduct',()=>{
+  location.reload();  
+})
+
+

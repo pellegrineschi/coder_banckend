@@ -1,17 +1,25 @@
-const{connection} = require('./database/connection');
+const { connection } = require('./database/connection');
 const express = require('express');
 const cors = require('cors');
-const handlebars = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const http = require('http');
 const app = express();
 const port = 8080;
 const server = http.createServer(app);
-const {Server} = require('socket.io');
+const { Server } = require('socket.io');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');//paquete de Handlebars que permite el acceso a las propiedades del prototipo en las plantillas Handlebars
 
-//motor de plantillas
-app.engine('handlebars', handlebars.engine());
-app.set('views', __dirname+'/views');
+// Motor de plantillas
+const hbs = exphbs.create({
+    handlebars: allowInsecurePrototypeAccess(require('handlebars'))
+});
+
+app.engine('handlebars', hbs.engine);
+app.set('views', __dirname + '/views');
 app.set('view engine', 'handlebars');
+
+// Resto del código...
+
 
 //public
 app.use(express.static(__dirname+'/public'));
@@ -30,9 +38,12 @@ app.use('/api',routesProducts);
 const io = new Server(server);
 io.on('connection',(socket)=>{
 console.log('user conectado');
+    
 })
 
 server.listen(port,() =>{
         console.log('server runing on port 8080');
         connection();
-    })
+    });
+
+   

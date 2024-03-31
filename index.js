@@ -9,6 +9,8 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');//paquete de Handlebars que permite el acceso a las propiedades del prototipo en las plantillas Handlebars
 
+// const {io} = require('./soket');
+
 // Motor de plantillas
 const hbs = exphbs.create({
     handlebars: allowInsecurePrototypeAccess(require('handlebars'))

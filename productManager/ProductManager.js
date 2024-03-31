@@ -3,6 +3,8 @@ const path = require('path');
 const validator = require('validator');
 const Products = require('../database/model/product.model');
 
+const {io} = require('../soket');
+
 
 const createProduct = async (req, res) => {
     //recoger parametros por post para guardar
@@ -32,7 +34,7 @@ const createProduct = async (req, res) => {
     //guardar el articulo en la db
     try {
       const articuloGuardado = await product.save();
-      
+      io.emit('newProduct')
       return res.status(200).json({
         status: "success",
         articulo: articuloGuardado,
